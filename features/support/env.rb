@@ -1,7 +1,7 @@
 require 'appium_lib'
 require 'rspec'
 
-Before do | scenario |
+Before do |scenario|
   # need to configure env variables for browser
   options = {
     caps: {
@@ -26,5 +26,5 @@ end
 
 After do |scenario|
   sessionid = @driver.session_id
-  # @driver.driver_quit
+  @driver.driver_quit
 end
