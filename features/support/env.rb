@@ -1,8 +1,8 @@
 require 'appium_lib'
 require 'rspec'
+require 'pry'
 
 Before do |scenario|
-  # need to configure env variables for browser
   options = {
     caps: {
       "platformName": 'android',
@@ -26,5 +26,5 @@ end
 
 After do |scenario|
   sessionid = @driver.session_id
-  @driver.driver_quit
+  # @driver.driver_quit
 end

@@ -3,11 +3,7 @@ def run_tests(deviceName, platformName, platformVersion, app, autoAcceptAlerts)
 end
 
 task :Run_On_Device do
-  run_tests('Z5R4J7IBQKPZL7X4', 'android','10','com.healthwire.healthwire', 'false')
+  run_tests('Z5R4J7IBQKPZL7X4', 'android','10','com.healthwire.healthwire', 'true')
 end
 
-multitask :test_healthwire => [
-  :Run_On_Device
-  ] do
-  puts 'Running automation'
-end
+multitask :test_healthwire => [:Run_On_Device]
