@@ -26,5 +26,6 @@ end
 
 After do |scenario|
   sessionid = @driver.session_id
+  puts sessionid
   # @driver.driver_quit
 end
