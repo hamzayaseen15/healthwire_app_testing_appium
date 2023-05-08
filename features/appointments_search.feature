@@ -6,3 +6,4 @@ Feature: Appointments Search
     Then I verify that the searched doctor is populated or not
     Then I clicked on the searched doctor
     Then I verify the recently selected doctor
+    Then I verify top 10 popular specialties
