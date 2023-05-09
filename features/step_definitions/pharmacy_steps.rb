@@ -1,6 +1,12 @@
 Given(/^I click on order medicine button$/) do
   el1 = @wait.until { @driver.find_element(:id, 'com.healthwire.healthwire:id/pharmacyDashboard') }
   el1.click
+  sleep(5)
+end
+
+Then(/^I add the address on google map$/) do
+  google_map = @wait.until { @driver.find_element(:id, 'com.healthwire.healthwire:id/btnSave') }
+  google_map.click
 end
 
 When(/^I select the categories$/) do

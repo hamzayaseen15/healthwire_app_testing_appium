@@ -24,7 +24,8 @@ end
 Then(/^I select any random speciality$/) do
   el25 = @wait.until { @driver.find_element(:id, 'com.healthwire.healthwire:id/rvMostChosenSpecialities') }
   child_of_el25 = @wait.until { el25.find_elements(:class, 'android.widget.TextView') }
-  random_el25 = @wait.until { rand(0..child_of_el25.length - 1) }
+  # random_el25 = @wait.until { rand(0..child_of_el25.length - 1) }
+  random_el25 = 0
   select_specialities = @wait.until { child_of_el25[random_el25] }
   @select_specialities_name = @wait.until { select_specialities.text }
   puts @select_specialities_name
@@ -92,6 +93,8 @@ Then(/^I choose time on review appointment page$/) do
     @selected_time = select_slots.text
     puts @selected_time
     select_slots.click
+  else
+    no_slots_available
   end
 end
 
@@ -147,4 +150,53 @@ end
 Then(/^I cancel the appointment$/) do
   cancel = @wait.until { @driver.find_element(:id, 'com.healthwire.healthwire:id/btnCancel') }
   cancel.click
+end
+
+def no_slots_available
+  @driver.navigate.back
+  @driver
+    .action
+    .move_to_location(332, 1298)
+    .pointer_down(:left)
+    .move_to_location(320, 537)
+    .release
+    .perform
+  doctor = @wait.until { @driver.find_element(:id, 'com.healthwire.healthwire:id/rvDoctorsList') }
+  $doctorname = doctor.find_element(:id, 'com.healthwire.healthwire:id/tvDoctorName').text
+  @practice_name = doctor.find_element(:id, 'com.healthwire.healthwire:id/tvDoctorSpeciality').text
+  $doctor_fee = doctor.find_element(:id, 'com.healthwire.healthwire:id/tvDoctorFee').text.gsub('Rs. ','').to_i
+  @doctor_speciality = doctor.find_element(:id, 'com.healthwire.healthwire:id/tvDoctorSpecialist').text
+  sleep(4)
+  view_profile = @wait.until { @driver.find_element(:id, 'com.healthwire.healthwire:id/btnDoctorViewProfile') }
+  view_profile.click
+  sleep(4)
+  doctorname_profile = @wait.until { @driver.find_element(:id, 'com.healthwire.healthwire:id/tvDoctorName').text }
+  practice_name_profile = @driver.find_element(:id, 'com.healthwire.healthwire:id/tvPractice').text
+  doctor_speciality_profille = @driver.find_element(:id, 'com.healthwire.healthwire:id/tvDoctorSpecialist').text
+  # doctor_fee_profile = @driver.find_element(:id, 'com.healthwire.healthwire:id/tvDoctorFee').text.gsub('Rs ','').to_i
+  expect($doctorname).to eq(doctorname_profile)
+  expect(@practice_name).to eq(practice_name_profile)
+  expect(@doctor_speciality).to eq(doctor_speciality_profille)
+  # expect(doctor_fee_profile).to eq(@doctor_fee)
+  sleep(4)
+  book_appointment_profile = @driver.find_element(:id, 'com.healthwire.healthwire:id/btnViewWeeklyCalender')
+  book_appointment_profile.click
+  sleep(4)
+  day = @wait.until { @driver.find_element(:id, 'com.healthwire.healthwire:id/rvWeekDays') }
+  choose_day = @wait.until { day.find_elements(:id, 'com.healthwire.healthwire:id/tvDayName') }
+  day_length = choose_day.length - 1
+  random_choose_day = @wait.until { rand(0..day_length) }
+  select_day = @wait.until { choose_day[random_choose_day] }
+  @selected_day = select_day.text
+  puts @selected_day
+  select_day.click
+  sleep(5)
+  slots = @wait.until { @driver.find_element(:id, 'com.healthwire.healthwire:id/rvSlotsDivisionDivision') }
+  choose_slots = @wait.until { slots.find_elements(:id, 'com.healthwire.healthwire:id/slotTime') }
+  slots_length = choose_slots.length - 1
+  random_choose_slots = @wait.until { rand(0..slots_length) }
+  select_slots = @wait.until { choose_slots[random_choose_slots] }
+  @selected_time = select_slots.text
+  puts @selected_time
+  select_slots.click
 end
