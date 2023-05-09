@@ -24,8 +24,7 @@ end
 Then(/^I select any random speciality$/) do
   el25 = @wait.until { @driver.find_element(:id, 'com.healthwire.healthwire:id/rvMostChosenSpecialities') }
   child_of_el25 = @wait.until { el25.find_elements(:class, 'android.widget.TextView') }
-  # random_el25 = @wait.until { rand(0..child_of_el25.length - 1) }
-  random_el25 = 0
+  random_el25 = @wait.until { rand(0..child_of_el25.length - 1) }
   select_specialities = @wait.until { child_of_el25[random_el25] }
   @select_specialities_name = @wait.until { select_specialities.text }
   puts @select_specialities_name
