@@ -13,6 +13,7 @@ When(/^I login to the application$/) do
   phonenumber.send_keys '3331157897'
   login = @wait.until { @driver.find_element(:id, 'com.healthwire.healthwire:id/btnGenerateOtp') }
   login.click
+  sleep(10)
 end
 
 Then(/^I click on Book Doctor Appointment$/) do

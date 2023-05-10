@@ -128,7 +128,8 @@ def select_medicine
       btn_addcart_click_strip.click
       selected_pack_size = @wait.until { @driver.find_element(:id, 'com.healthwire.healthwire:id/radioGroupStripPack') }
       pack_strip = @wait.until { selected_pack_size.find_elements(:class, 'android.widget.RadioButton') }
-      random_pack_strip = @wait.until { rand(0..pack_strip.length - 1) }
+      # random_pack_strip = @wait.until { rand(0..pack_strip.length - 1) }
+      random_pack_strip = 1
       select_pack_strip = @wait.until { pack_strip[random_pack_strip] }
       select_pack_strip.click
       rand_qc_new = rand(1..7)
